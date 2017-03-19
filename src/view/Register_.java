@@ -25,10 +25,10 @@ public class Register_ extends javax.swing.JFrame {
 		this.add(changeImg);
 		this.changeImg.setLocation(this.regChangePicBtn.getX() - 115,
 				this.regChangePicBtn.getY() - 15);
+		this.setLocationRelativeTo(null);
 	}
 
 	//GEN-BEGIN:initComponents
-	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
 		regUsernameConfirmLab = new javax.swing.JLabel();
@@ -51,6 +51,7 @@ public class Register_ extends javax.swing.JFrame {
 		RegAckPswTxt = new javax.swing.JPasswordField();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setTitle("\u7528\u6237\u6ce8\u518c");
 
 		regUsernameConfirmLab.setText("  ");
 
@@ -118,6 +119,11 @@ public class Register_ extends javax.swing.JFrame {
 		regBtn.setText("\u6ce8  \u518c");
 
 		jButton3.setText("\u8fd4  \u56de");
+		jButton3.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton3ActionPerformed(evt);
+			}
+		});
 
 		RegPswTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
@@ -367,11 +373,25 @@ public class Register_ extends javax.swing.JFrame {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	/**
+	 * 返回登录界面按钮
+	 */
+	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+		int num = JOptionPane.showConfirmDialog(null, "是否要返回登录界面");
+		if (num == 0) {
+			this.dispose();
+			Login_ login = new Login_();
+			login.setVisible(true);
+			return;
+		}
+	}
+
 	private void RegAckPswTxtFocusLost(java.awt.event.FocusEvent evt) {
 		// TODO add your handling code here:
 		String pwd = new String(this.RegPswTxt.getPassword());
 		String ackPwd = new String(this.RegAckPswTxt.getPassword());
-		if(!Check.isEmpty(pwd) && pwd.equals(ackPwd)){
+		if (!Check.isEmpty(pwd) && pwd.equals(ackPwd)) {
 			this.regAckPswConfirmLab.setText(" ");
 		} else {
 			this.regAckPswConfirmLab.setText("前后密码不一致");

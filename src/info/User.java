@@ -1,5 +1,7 @@
 package info;
 
+import java.util.Vector;
+
 public class User {
 	
 	private int id;
@@ -7,6 +9,7 @@ public class User {
 	private String password;
 	private String mail;
 	private String phone;
+	private Vector<Contacts> contactsGrounp;
 	/**
 	 * 用户个人信息
 	 * @return
@@ -41,5 +44,10 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+	public Vector<Contacts> getContactsGrounp() {
+		return contactsGrounp;
+	}
+	public void setContactsGrounp(Vector<Contacts> contactsGrounp) {
+		this.contactsGrounp = contactsGrounp;
+	}
 }

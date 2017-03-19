@@ -13,6 +13,11 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * 制造验证码
+ * @author john
+ *
+ */
 public class ImageCodePanel extends JPanel{
 	public final static int WIDTH = 100;
 	public final static int HEIGHT = 50;
