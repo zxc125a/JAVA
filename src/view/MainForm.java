@@ -37,15 +37,16 @@ public class MainForm extends javax.swing.JFrame {
 		this.user = user;
 		paintTable();
 	}
-    
+
 	/**
 	 *渲染联系人表格
 	 */
-	public void paintTable(){
-		DefaultTableModel tableModule = (DefaultTableModel)this.mainFormTable.getModel();
+	public void paintTable() {
+		DefaultTableModel tableModule = (DefaultTableModel) this.mainFormTable
+				.getModel();
 		tableModule.setRowCount(0);
 		Iterator<Contacts> it = user.getContactsGrounp().iterator();
-		while(it.hasNext()){
+		while (it.hasNext()) {
 			Vector v = new Vector();
 			Contacts contacts = it.next();
 			v.add(contacts.getGroupName());
@@ -59,7 +60,7 @@ public class MainForm extends javax.swing.JFrame {
 			v.add(contacts.getWorkphone());
 			tableModule.addRow(v);
 		}
-		
+
 	}
 
 	//GEN-BEGIN:initComponents
@@ -75,17 +76,31 @@ public class MainForm extends javax.swing.JFrame {
 		jButton6 = new javax.swing.JButton();
 		jButton7 = new javax.swing.JButton();
 		jButton8 = new javax.swing.JButton();
-		jPanel1 = new javax.swing.JPanel();
-		jScrollPane2 = new javax.swing.JScrollPane();
-		jTree1 = new javax.swing.JTree();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		mainFormTable = new javax.swing.JTable();
 		jMenuBar1 = new javax.swing.JMenuBar();
 		jMenu1 = new javax.swing.JMenu();
 		jMenu2 = new javax.swing.JMenu();
 		jMenu3 = new javax.swing.JMenu();
 		jMenu4 = new javax.swing.JMenu();
 		jMenu5 = new javax.swing.JMenu();
+		jMenuBar2 = new javax.swing.JMenuBar();
+		jMenu6 = new javax.swing.JMenu();
+		jMenu7 = new javax.swing.JMenu();
+		jMenu8 = new javax.swing.JMenu();
+		jMenu9 = new javax.swing.JMenu();
+		jMenu10 = new javax.swing.JMenu();
+		MainTable = new javax.swing.JDesktopPane();
+		jPanel1 = new javax.swing.JPanel();
+		jScrollPane2 = new javax.swing.JScrollPane();
+		jTree1 = new javax.swing.JTree();
+		jPanel2 = new javax.swing.JPanel();
+		jScrollPane1 = new javax.swing.JScrollPane();
+		mainFormTable = new javax.swing.JTable();
+		jMenuBar2 = new javax.swing.JMenuBar();
+		jMenu6 = new javax.swing.JMenu();
+		jMenu7 = new javax.swing.JMenu();
+		jMenu8 = new javax.swing.JMenu();
+		jMenu9 = new javax.swing.JMenu();
+		jMenu10 = new javax.swing.JMenu();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("\u4e2a\u4eba\u901a\u8baf\u5f55");
@@ -119,6 +134,11 @@ public class MainForm extends javax.swing.JFrame {
 		jButton3.setMaximumSize(new java.awt.Dimension(81, 50));
 		jButton3.setMinimumSize(new java.awt.Dimension(81, 50));
 		jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton3.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton3ActionPerformed(evt);
+			}
+		});
 		jToolBar1.add(jButton3);
 
 		jButton4.setFont(new java.awt.Font("微软雅黑", 0, 18));
@@ -166,38 +186,6 @@ public class MainForm extends javax.swing.JFrame {
 		jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 		jToolBar1.add(jButton8);
 
-		jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
-
-		jScrollPane2.setViewportView(jTree1);
-
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
-				jPanel1);
-		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 209,
-				Short.MAX_VALUE));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 466,
-				Short.MAX_VALUE));
-
-		jScrollPane1.setAutoscrolls(true);
-		jScrollPane1.setMaximumSize(new java.awt.Dimension(50, 50));
-
-		mainFormTable
-				.setModel(new javax.swing.table.DefaultTableModel(
-						new Object[][] {
-								{ null, null, null, null, null, null, null,
-										null, null },
-								{ null, null, null, null, null, null, null,
-										null, null } }, new String[] { "用 户 组",
-								" 姓 名", " 手 机", " 性 别", " 生 日", " 地 址", " 邮 编",
-								"单位名称", "单位电话" }));
-		mainFormTable.setMinimumSize(new java.awt.Dimension(1000, 32));
-		mainFormTable.setRowHeight(20);
-		jScrollPane1.setViewportView(mainFormTable);
-
 		jMenu1.setText("\u7cfb  \u7edf");
 		jMenu1.setPreferredSize(new java.awt.Dimension(51, 19));
 		jMenuBar1.add(jMenu1);
@@ -218,7 +206,101 @@ public class MainForm extends javax.swing.JFrame {
 		jMenu5.setPreferredSize(new java.awt.Dimension(75, 19));
 		jMenuBar1.add(jMenu5);
 
-		setJMenuBar(jMenuBar1);
+		jMenu6.setText("\u7cfb  \u7edf");
+		jMenu6.setPreferredSize(new java.awt.Dimension(51, 19));
+		jMenuBar2.add(jMenu6);
+
+		jMenu7.setText("\u8054\u7cfb\u4eba\u5206\u7ec4");
+		jMenu7.setPreferredSize(new java.awt.Dimension(79, 19));
+		jMenuBar2.add(jMenu7);
+
+		jMenu8.setText("\u8054\u7cfb\u4eba\uff08C\uff09");
+		jMenu8.setPreferredSize(new java.awt.Dimension(87, 19));
+		jMenuBar2.add(jMenu8);
+
+		jMenu9.setText("\u5de5\u5177\uff08T\uff09");
+		jMenu9.setPreferredSize(new java.awt.Dimension(73, 19));
+		jMenuBar2.add(jMenu9);
+
+		jMenu10.setText("\u5e2e\u52a9\uff08H\uff09");
+		jMenu10.setPreferredSize(new java.awt.Dimension(75, 19));
+		jMenuBar2.add(jMenu10);
+
+		setJMenuBar(jMenuBar2);
+
+		jScrollPane2.setViewportView(jTree1);
+
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
+				jPanel1);
+		jPanel1.setLayout(jPanel1Layout);
+		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING,
+				javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470,
+				Short.MAX_VALUE));
+
+		jPanel1.setBounds(10, 10, 200, 470);
+		MainTable.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+		jScrollPane1.setAutoscrolls(true);
+		jScrollPane1.setMaximumSize(new java.awt.Dimension(50, 50));
+
+		mainFormTable
+				.setModel(new javax.swing.table.DefaultTableModel(
+						new Object[][] {
+								{ null, null, null, null, null, null, null,
+										null, null },
+								{ null, null, null, null, null, null, null,
+										null, null } }, new String[] { "用 户 组",
+								" 姓 名", " 手 机", " 性 别", " 生 日", " 地 址", " 邮 编",
+								"单位名称", "单位电话" }));
+		mainFormTable.setMinimumSize(new java.awt.Dimension(1000, 32));
+		mainFormTable.setRowHeight(20);
+		jScrollPane1.setViewportView(mainFormTable);
+
+		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
+				jPanel2);
+		jPanel2.setLayout(jPanel2Layout);
+		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				jPanel2Layout.createSequentialGroup().addContainerGap()
+						.addComponent(jScrollPane1,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 646,
+								Short.MAX_VALUE).addContainerGap()));
+		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				jPanel2Layout.createSequentialGroup().addContainerGap()
+						.addComponent(jScrollPane1,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 442,
+								Short.MAX_VALUE).addContainerGap()));
+
+		jPanel2.setBounds(220, 10, 670, 470);
+		MainTable.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+		jMenu6.setText("\u7cfb  \u7edf");
+		jMenu6.setPreferredSize(new java.awt.Dimension(51, 19));
+		jMenuBar2.add(jMenu6);
+
+		jMenu7.setText("\u8054\u7cfb\u4eba\u5206\u7ec4");
+		jMenu7.setPreferredSize(new java.awt.Dimension(79, 19));
+		jMenuBar2.add(jMenu7);
+
+		jMenu8.setText("\u8054\u7cfb\u4eba\uff08C\uff09");
+		jMenu8.setPreferredSize(new java.awt.Dimension(87, 19));
+		jMenuBar2.add(jMenu8);
+
+		jMenu9.setText("\u5de5\u5177\uff08T\uff09");
+		jMenu9.setPreferredSize(new java.awt.Dimension(73, 19));
+		jMenuBar2.add(jMenu9);
+
+		jMenu10.setText("\u5e2e\u52a9\uff08H\uff09");
+		jMenu10.setPreferredSize(new java.awt.Dimension(75, 19));
+		jMenuBar2.add(jMenu10);
+
+		setJMenuBar(jMenuBar2);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
 				getContentPane());
@@ -234,29 +316,25 @@ public class MainForm extends javax.swing.JFrame {
 												layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																layout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				jPanel1,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addGap(
-																				18,
-																				18,
-																				18)
-																		.addComponent(
-																				jScrollPane1,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				683,
-																				Short.MAX_VALUE))
 														.addComponent(
 																jToolBar1,
+																javax.swing.GroupLayout.Alignment.TRAILING,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																924,
-																Short.MAX_VALUE))
+																Short.MAX_VALUE)
+														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																layout
+																		.createSequentialGroup()
+																		.addGap(
+																				27,
+																				27,
+																				27)
+																		.addComponent(
+																				MainTable,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				897,
+																				Short.MAX_VALUE)))
 										.addContainerGap()));
 		layout
 				.setVerticalGroup(layout
@@ -272,26 +350,24 @@ public class MainForm extends javax.swing.JFrame {
 												46,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																jScrollPane1,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																468,
-																Short.MAX_VALUE)
-														.addComponent(
-																jPanel1,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))
-										.addContainerGap()));
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addComponent(
+												MainTable,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												496,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGap(8, 8, 8)));
 
 		pack();
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+		AddContact addContact = new AddContact();
+		this.MainTable.add(addContact);
+		addContact.setVisible(true);
+	}
 
 	/**
 	 * @param args the command line arguments
@@ -306,6 +382,7 @@ public class MainForm extends javax.swing.JFrame {
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
+	private javax.swing.JDesktopPane MainTable;
 	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton2;
 	private javax.swing.JButton jButton3;
@@ -315,12 +392,19 @@ public class MainForm extends javax.swing.JFrame {
 	private javax.swing.JButton jButton7;
 	private javax.swing.JButton jButton8;
 	private javax.swing.JMenu jMenu1;
+	private javax.swing.JMenu jMenu10;
 	private javax.swing.JMenu jMenu2;
 	private javax.swing.JMenu jMenu3;
 	private javax.swing.JMenu jMenu4;
 	private javax.swing.JMenu jMenu5;
+	private javax.swing.JMenu jMenu6;
+	private javax.swing.JMenu jMenu7;
+	private javax.swing.JMenu jMenu8;
+	private javax.swing.JMenu jMenu9;
 	private javax.swing.JMenuBar jMenuBar1;
+	private javax.swing.JMenuBar jMenuBar2;
 	private javax.swing.JPanel jPanel1;
+	private javax.swing.JPanel jPanel2;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JToolBar jToolBar1;
