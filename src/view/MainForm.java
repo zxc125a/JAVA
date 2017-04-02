@@ -9,7 +9,12 @@ package view;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import dbTool.DbCon;
+import dbTool.LoginCon;
+import dbTool.UpdateDb;
 
 import info.Contacts;
 import info.User;
@@ -45,6 +50,13 @@ public class MainForm extends javax.swing.JFrame {
 		DefaultTableModel tableModule = (DefaultTableModel) this.mainFormTable
 				.getModel();
 		tableModule.setRowCount(0);
+		try {
+			user.setContactsGrounp(LoginCon.getContacts(DbCon.getCon(), user));
+		} catch (Exception e) {
+			// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, "联系人信息刷新失败");
+		}
+
 		Iterator<Contacts> it = user.getContactsGrounp().iterator();
 		while (it.hasNext()) {
 			Vector v = new Vector();
@@ -55,7 +67,7 @@ public class MainForm extends javax.swing.JFrame {
 			v.add(contacts.getSex());
 			v.add(contacts.getBirthday());
 			v.add(contacts.getAddress());
-			v.add(contacts.getPostcode());
+			v.add(contacts.getEmail());
 			v.add(contacts.getWorkplace());
 			v.add(contacts.getWorkphone());
 			tableModule.addRow(v);
@@ -93,14 +105,14 @@ public class MainForm extends javax.swing.JFrame {
 		jScrollPane2 = new javax.swing.JScrollPane();
 		jTree1 = new javax.swing.JTree();
 		jPanel2 = new javax.swing.JPanel();
-		jScrollPane1 = new javax.swing.JScrollPane();
+		MainFormInfoPane = new javax.swing.JScrollPane();
 		mainFormTable = new javax.swing.JTable();
-		jMenuBar2 = new javax.swing.JMenuBar();
-		jMenu6 = new javax.swing.JMenu();
-		jMenu7 = new javax.swing.JMenu();
-		jMenu8 = new javax.swing.JMenu();
-		jMenu9 = new javax.swing.JMenu();
-		jMenu10 = new javax.swing.JMenu();
+		jMenuBar3 = new javax.swing.JMenuBar();
+		jMenu11 = new javax.swing.JMenu();
+		jMenu12 = new javax.swing.JMenu();
+		jMenu13 = new javax.swing.JMenu();
+		jMenu14 = new javax.swing.JMenu();
+		jMenu15 = new javax.swing.JMenu();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("\u4e2a\u4eba\u901a\u8baf\u5f55");
@@ -148,6 +160,11 @@ public class MainForm extends javax.swing.JFrame {
 		jButton4.setMaximumSize(new java.awt.Dimension(81, 50));
 		jButton4.setMinimumSize(new java.awt.Dimension(81, 50));
 		jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+		jButton4.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButton4ActionPerformed(evt);
+			}
+		});
 		jToolBar1.add(jButton4);
 
 		jButton5.setFont(new java.awt.Font("微软雅黑", 0, 18));
@@ -226,8 +243,6 @@ public class MainForm extends javax.swing.JFrame {
 		jMenu10.setPreferredSize(new java.awt.Dimension(75, 19));
 		jMenuBar2.add(jMenu10);
 
-		setJMenuBar(jMenuBar2);
-
 		jScrollPane2.setViewportView(jTree1);
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
@@ -245,8 +260,8 @@ public class MainForm extends javax.swing.JFrame {
 		jPanel1.setBounds(10, 10, 200, 470);
 		MainTable.add(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		jScrollPane1.setAutoscrolls(true);
-		jScrollPane1.setMaximumSize(new java.awt.Dimension(50, 50));
+		MainFormInfoPane.setAutoscrolls(true);
+		MainFormInfoPane.setMaximumSize(new java.awt.Dimension(50, 50));
 
 		mainFormTable
 				.setModel(new javax.swing.table.DefaultTableModel(
@@ -255,11 +270,11 @@ public class MainForm extends javax.swing.JFrame {
 										null, null },
 								{ null, null, null, null, null, null, null,
 										null, null } }, new String[] { "用 户 组",
-								" 姓 名", " 手 机", " 性 别", " 生 日", " 地 址", " 邮 编",
+								" 姓 名", " 手 机", " 性 别", " 生 日", " 地 址", " 邮 箱",
 								"单位名称", "单位电话" }));
 		mainFormTable.setMinimumSize(new java.awt.Dimension(1000, 32));
 		mainFormTable.setRowHeight(20);
-		jScrollPane1.setViewportView(mainFormTable);
+		MainFormInfoPane.setViewportView(mainFormTable);
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
@@ -267,40 +282,40 @@ public class MainForm extends javax.swing.JFrame {
 		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel2Layout.createSequentialGroup().addContainerGap()
-						.addComponent(jScrollPane1,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 646,
-								Short.MAX_VALUE).addContainerGap()));
+						.addComponent(MainFormInfoPane,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 658,
+								Short.MAX_VALUE)));
 		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel2Layout.createSequentialGroup().addContainerGap()
-						.addComponent(jScrollPane1,
+						.addComponent(MainFormInfoPane,
 								javax.swing.GroupLayout.DEFAULT_SIZE, 442,
 								Short.MAX_VALUE).addContainerGap()));
 
 		jPanel2.setBounds(220, 10, 670, 470);
 		MainTable.add(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-		jMenu6.setText("\u7cfb  \u7edf");
-		jMenu6.setPreferredSize(new java.awt.Dimension(51, 19));
-		jMenuBar2.add(jMenu6);
+		jMenu11.setText("\u7cfb  \u7edf");
+		jMenu11.setPreferredSize(new java.awt.Dimension(51, 19));
+		jMenuBar3.add(jMenu11);
 
-		jMenu7.setText("\u8054\u7cfb\u4eba\u5206\u7ec4");
-		jMenu7.setPreferredSize(new java.awt.Dimension(79, 19));
-		jMenuBar2.add(jMenu7);
+		jMenu12.setText("\u8054\u7cfb\u4eba\u5206\u7ec4");
+		jMenu12.setPreferredSize(new java.awt.Dimension(79, 19));
+		jMenuBar3.add(jMenu12);
 
-		jMenu8.setText("\u8054\u7cfb\u4eba\uff08C\uff09");
-		jMenu8.setPreferredSize(new java.awt.Dimension(87, 19));
-		jMenuBar2.add(jMenu8);
+		jMenu13.setText("\u8054\u7cfb\u4eba\uff08C\uff09");
+		jMenu13.setPreferredSize(new java.awt.Dimension(87, 19));
+		jMenuBar3.add(jMenu13);
 
-		jMenu9.setText("\u5de5\u5177\uff08T\uff09");
-		jMenu9.setPreferredSize(new java.awt.Dimension(73, 19));
-		jMenuBar2.add(jMenu9);
+		jMenu14.setText("\u5de5\u5177\uff08T\uff09");
+		jMenu14.setPreferredSize(new java.awt.Dimension(73, 19));
+		jMenuBar3.add(jMenu14);
 
-		jMenu10.setText("\u5e2e\u52a9\uff08H\uff09");
-		jMenu10.setPreferredSize(new java.awt.Dimension(75, 19));
-		jMenuBar2.add(jMenu10);
+		jMenu15.setText("\u5e2e\u52a9\uff08H\uff09");
+		jMenu15.setPreferredSize(new java.awt.Dimension(75, 19));
+		jMenuBar3.add(jMenu15);
 
-		setJMenuBar(jMenuBar2);
+		setJMenuBar(jMenuBar3);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
 				getContentPane());
@@ -362,9 +377,29 @@ public class MainForm extends javax.swing.JFrame {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
+	/**
+	 *主界面删除按钮，点击删除按钮后，表被选中的相应记录被删除
+	 */
+	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+		int n = this.mainFormTable.getSelectedRow();
+		DefaultTableModel tableModel = (DefaultTableModel) this.mainFormTable
+				.getModel();
+	    tableModel.removeRow(n);
+	    Contacts contact = (Contacts)user.getContactsGrounp().get(n);
+     	int uid = contact.getUid();
+     	try{
+     		UpdateDb.deleContactFromDb(uid);
+     		JOptionPane.showConfirmDialog(null, "删除成功");
+     	}catch (Exception e) {
+			// TODO: handle exception
+     		JOptionPane.showConfirmDialog(null, "删除记录失败");
+     	}
+	}
+
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		AddContact addContact = new AddContact();
+		AddContact addContact = new AddContact(this.user);
 		this.MainTable.add(addContact);
 		addContact.setVisible(true);
 	}
@@ -382,6 +417,7 @@ public class MainForm extends javax.swing.JFrame {
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
+	private javax.swing.JScrollPane MainFormInfoPane;
 	private javax.swing.JDesktopPane MainTable;
 	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton2;
@@ -393,6 +429,11 @@ public class MainForm extends javax.swing.JFrame {
 	private javax.swing.JButton jButton8;
 	private javax.swing.JMenu jMenu1;
 	private javax.swing.JMenu jMenu10;
+	private javax.swing.JMenu jMenu11;
+	private javax.swing.JMenu jMenu12;
+	private javax.swing.JMenu jMenu13;
+	private javax.swing.JMenu jMenu14;
+	private javax.swing.JMenu jMenu15;
 	private javax.swing.JMenu jMenu2;
 	private javax.swing.JMenu jMenu3;
 	private javax.swing.JMenu jMenu4;
@@ -403,9 +444,9 @@ public class MainForm extends javax.swing.JFrame {
 	private javax.swing.JMenu jMenu9;
 	private javax.swing.JMenuBar jMenuBar1;
 	private javax.swing.JMenuBar jMenuBar2;
+	private javax.swing.JMenuBar jMenuBar3;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel2;
-	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JToolBar jToolBar1;
 	private javax.swing.JTree jTree1;

@@ -50,6 +50,7 @@ public class Login_ extends javax.swing.JFrame {
 		loginPswTxt = new javax.swing.JPasswordField();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setResizable(false);
 
 		loginOkBtn.setText("\u767b   \u5f55");
 		loginOkBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +186,7 @@ public class Login_ extends javax.swing.JFrame {
 				JOptionPane.showConfirmDialog(null, "用户登录成功");
 				this.dispose();
 				MainForm mainForm = new MainForm(user);
+				user.setMainForm(mainForm);
 				mainForm.setVisible(true);
 			} else {
 				JOptionPane.showConfirmDialog(null, "用户登录失败");
@@ -193,7 +195,7 @@ public class Login_ extends javax.swing.JFrame {
 			// TODO: handle exception
 			e.printStackTrace();
 		} finally {
-			DbCon.closeCon(con);
+			//DbCon.closeCon(con);
 		}
 	}
 

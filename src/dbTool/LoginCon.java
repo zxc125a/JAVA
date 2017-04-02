@@ -36,7 +36,7 @@ public class LoginCon {
 				user.setUsername(rs.getString("username"));
 				user.setMail(rs.getString("mail"));
 				user.setPhone(rs.getString("mobilephone"));
-				user.setContactsGrounp(getContacts(con, username));
+				user.setContactsGrounp(getContacts(con, user));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -45,21 +45,20 @@ public class LoginCon {
 	}
 	
 	/**
-	 * 获取用户的联系人信息,并封装成对象
+	 * 获取用户所有联系人信息,分别封装成对象，存于容器中
 	 * @param conn
 	 * @param username
 	 * @return
 	 * @throws SQLException
 	 */
-	private static Vector<Contacts> getContacts(Connection conn, String username) throws SQLException{
+	public static Vector<Contacts> getContacts(Connection conn, User user) throws SQLException{
 		Vector<Contacts> vContactsGroup = new Vector<Contacts>();
-		int i = 0;
 		String sql = "select * from tb_contacts where username = ?";
 		PreparedStatement pstm = conn.prepareStatement(sql);
-		pstm.setString(1, username);
+		pstm.setString(1, user.getUsername());
 		ResultSet rs = pstm.executeQuery();
 		while(rs.next()){
-			Contacts contacts = new Contacts();
+				Contacts contacts = new Contacts();
 				contacts.setUid(rs.getInt("uid"));
 				contacts.setUsername(rs.getString("username"));
 				contacts.setName(rs.getString("name"));
@@ -67,10 +66,11 @@ public class LoginCon {
 				contacts.setSex(rs.getString("sex"));
 				contacts.setBirthday(rs.getString("birthday"));
 				contacts.setAddress(rs.getString("address"));
-				contacts.setPostcode(rs.getString("postcode"));
+				contacts.setEmail(rs.getString("email"));
 				contacts.setWorkplace(rs.getString("workplace"));
 				contacts.setWorkphone(rs.getString("workphone"));
 				contacts.setGroupName(rs.getString("groupname"));
+				user.getAllGroupName().add(rs.getString("groupname"));
 				vContactsGroup.add(contacts);
 		} 
 		return vContactsGroup;

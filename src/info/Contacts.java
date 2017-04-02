@@ -5,16 +5,23 @@ public class Contacts {
 	private int uid;
 	private String username;
 	private String name;
-	private int phone;
+	private long phone;
 	private String sex;
 	private String birthday;
 	private String address;
-	private String postcode;
+	private String email;
 	private String workplace;
 	private String workphone;
 	private String groupName;
+	private String remark;
 	private String num;
 
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	public String getNum() {
 		return num;
 	}
@@ -28,7 +35,7 @@ public class Contacts {
 	
 
 	public Contacts(int uid, String username, String name, int phone,
-			String sex, String birthday, String address, String postcode,
+			String sex, String birthday, String address, String email,
 			String workplace, String workphone, String groupName) {
 		super();
 		this.uid = uid;
@@ -38,7 +45,7 @@ public class Contacts {
 		this.sex = sex;
 		this.birthday = birthday;
 		this.address = address;
-		this.postcode = postcode;
+		this.email = email;
 		this.workplace = workplace;
 		this.workphone = workphone;
 		this.groupName = groupName;
@@ -64,10 +71,10 @@ public class Contacts {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getPhone() {
+	public long getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(long phone) {
 		this.phone = phone;
 	}
 	public String getSex() {
@@ -88,11 +95,11 @@ public class Contacts {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getPostcode() {
-		return postcode;
+	public String getEmail() {
+		return email;
 	}
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getWorkplace() {
 		return workplace;
@@ -112,5 +119,7 @@ public class Contacts {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	
+	public String toString(){
+		return this.groupName;
+	}
 }

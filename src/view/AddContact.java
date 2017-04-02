@@ -6,11 +6,18 @@
 
 package view;
 
+import info.Contacts;
 import info.User;
 
+import java.security.acl.Group;
 import java.sql.Connection;
+import java.util.HashSet;
+
+import javax.swing.JOptionPane;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import dbTool.DbCon;
+import dbTool.UpdateDb;
 
 /**
  *
@@ -18,19 +25,37 @@ import dbTool.DbCon;
  */
 public class AddContact extends javax.swing.JInternalFrame {
 
-	
+	private boolean sign = false; //用户校验联系人信息是否填写正确
+	private User user; //用户信息
+
 	/** Creates new form AddContact */
 	public AddContact() {
 		initComponents();
 		this.setLocation(150, 30);
+		this.resizable = true;
 	}
-    
+
+	public AddContact(User user) {
+		initComponents();
+		this.setLocation(150, 30);
+		this.user = user;
+		paint(user);
+	}
+
 	/**
-	 * 渲染分组信息
+	 * 渲染复合框中的分组信息
 	 */
-	private void paint(){
-		//for(int i = 0; i < )
+	private void paint(User user) {
+		/**
+		 * 哈希表去重,渲染复合框，填入用户所有联系人组
+		 */
+		java.util.Iterator<String> it = user.getAllGroupName().iterator();
+		while (it.hasNext()) {
+			String str = it.next();
+			this.addContactGroupJcb.addItem(str);
+		}
 	}
+
 	/** This method is called from within the constructor to
 	 * initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is
@@ -50,7 +75,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 		addContactPhoneTxt = new javax.swing.JTextField();
 		jLabel4 = new javax.swing.JLabel();
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jTextArea1 = new javax.swing.JTextArea();
+		addContactRemarkTxtField = new javax.swing.JTextArea();
 		jLabel5 = new javax.swing.JLabel();
 		addContactGroupJcb = new javax.swing.JComboBox();
 		addContactOkBtn = new javax.swing.JButton();
@@ -63,13 +88,14 @@ public class AddContact extends javax.swing.JInternalFrame {
 		setForeground(java.awt.Color.pink);
 		setIconifiable(true);
 		setMaximizable(true);
-		setResizable(true);
-		setMaximumSize(new java.awt.Dimension(120, 120));
-		setMinimumSize(new java.awt.Dimension(120, 120));
+		setMaximumSize(new java.awt.Dimension(500, 450));
+		setMinimumSize(new java.awt.Dimension(500, 450));
 		setOpaque(true);
-		setPreferredSize(new java.awt.Dimension(540, 450));
+		setPreferredSize(new java.awt.Dimension(500, 450));
 
-		jPanel1.setMaximumSize(new java.awt.Dimension(100, 100));
+		jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		jPanel1.setMaximumSize(new java.awt.Dimension(500, 500));
+		jPanel1.setMinimumSize(new java.awt.Dimension(500, 500));
 		jPanel1.setVerifyInputWhenFocusTarget(false);
 
 		jLabel1.setText("\u59d3      \u540d :");
@@ -98,24 +124,27 @@ public class AddContact extends javax.swing.JInternalFrame {
 
 		jLabel4.setText("\u5907   \u6ce8 \uff1a");
 
-		jTextArea1.setColumns(20);
-		jTextArea1.setLineWrap(true);
-		jTextArea1.setRows(5);
-		jScrollPane1.setViewportView(jTextArea1);
+		addContactRemarkTxtField.setColumns(20);
+		addContactRemarkTxtField.setLineWrap(true);
+		addContactRemarkTxtField.setRows(5);
+		jScrollPane1.setViewportView(addContactRemarkTxtField);
 
 		jLabel5.setText("\u5206  \u7ec4 \uff1a");
 
-		addContactGroupJcb.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-				"Item 1", "Item 2", "Item 3", "Item 4" }));
-		addContactGroupJcb.addActionListener(new java.awt.event.ActionListener() {
+		addContactOkBtn.setText("\u786e   \u5b9a");
+		addContactOkBtn.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jComboBox1ActionPerformed(evt);
+				addContactOkBtnActionPerformed(evt);
 			}
 		});
 
-		addContactOkBtn.setText("\u786e   \u5b9a");
-
-		addContactCancelBtn.setText("\u53d6   \u6d88");
+		addContactCancelBtn.setText("\u8fd4  \u56de");
+		addContactCancelBtn
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						addContactCancelBtnActionPerformed(evt);
+					}
+				});
 
 		addContactEmailLabel.setText("  ");
 
@@ -165,7 +194,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 																								jLabel3,
 																								javax.swing.GroupLayout.Alignment.LEADING,
 																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								63,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
 																								Short.MAX_VALUE)
 																						.addComponent(
 																								jLabel2,
@@ -194,10 +223,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 																								jPanel1Layout
 																										.createSequentialGroup()
 																										.addComponent(
-																												addContactNameTxt,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												253,
-																												Short.MAX_VALUE)
+																												addContactNameTxt)
 																										.addPreferredGap(
 																												javax.swing.LayoutStyle.ComponentPlacement.RELATED))
 																						.addComponent(
@@ -219,18 +245,18 @@ public class AddContact extends javax.swing.JInternalFrame {
 																jPanel1Layout
 																		.createSequentialGroup()
 																		.addGap(
-																				206,
-																				206,
-																				206)
+																				205,
+																				205,
+																				205)
 																		.addComponent(
 																				addContactOkBtn)
 																		.addGap(
-																				35,
-																				35,
-																				35)
+																				18,
+																				18,
+																				18)
 																		.addComponent(
 																				addContactCancelBtn)))
-										.addContainerGap(98, Short.MAX_VALUE)));
+										.addContainerGap(30, Short.MAX_VALUE)));
 		jPanel1Layout
 				.setVerticalGroup(jPanel1Layout
 						.createParallelGroup(
@@ -311,87 +337,121 @@ public class AddContact extends javax.swing.JInternalFrame {
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(18, 18, 18)
+										.addGap(32, 32, 32)
 										.addGroup(
 												jPanel1Layout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.BASELINE)
 														.addComponent(
-																addContactCancelBtn)
+																addContactOkBtn)
 														.addComponent(
-																addContactOkBtn))
-										.addContainerGap(47, Short.MAX_VALUE)));
+																addContactCancelBtn))
+										.addGap(7, 7, 7)));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
 				getContentPane());
 		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				layout.createSequentialGroup().addComponent(jLabel6)
+						.addContainerGap(480, Short.MAX_VALUE)).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				layout.createSequentialGroup().addContainerGap(52,
+						Short.MAX_VALUE).addComponent(jPanel1,
+						javax.swing.GroupLayout.PREFERRED_SIZE, 391,
+						javax.swing.GroupLayout.PREFERRED_SIZE).addGap(37, 37,
+						37)));
 		layout
-				.setHorizontalGroup(layout
+				.setVerticalGroup(layout
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								layout
 										.createSequentialGroup()
+										.addContainerGap()
 										.addGroup(
 												layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																layout
-																		.createSequentialGroup()
-																		.addGap(
-																				615,
-																				615,
-																				615)
-																		.addComponent(
-																				jLabel6,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				150,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
-														.addGroup(
-																layout
-																		.createSequentialGroup()
-																		.addGap(
-																				48,
-																				48,
-																				48)
-																		.addComponent(
-																				jPanel1,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																jPanel1,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																376,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(jLabel6))
 										.addContainerGap(
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				layout.createSequentialGroup().addContainerGap(
-						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(jLabel6).addGap(18, 18, 18).addComponent(
-								jPanel1,
-								javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE).addGap(
-								31, 31, 31)));
 
 		pack();
 	}// </editor-fold>
 	//GEN-END:initComponents
-    /**
-     * 验证手机格式是否有误
-     */
+
+	/**
+	 * 点击返回按钮时，返回主界面
+	 */
+	private void addContactCancelBtnActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+		int n = JOptionPane.showConfirmDialog(null, "是否要返回主界面?");
+		if (n == 0) {
+			this.dispose();
+			user.getMainForm().paintTable();
+		}
+
+	}
+
+	/**
+	 * 单击确定按钮后，将联系人信息提交到数据库
+	 */
+	private void addContactOkBtnActionPerformed(java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+		if (sign == true) {
+
+			Contacts contact = new Contacts();
+			contact.setName(this.addContactNameTxt.getText());
+			contact.setEmail(this.addContactEmailTxt.getText());
+			long phone = Long.parseLong(this.addContactPhoneTxt.getText());
+			contact.setPhone(phone);
+			String groupName = this.addContactGroupJcb.getSelectedItem()
+					.toString();
+			contact.setGroupName(groupName);
+			contact.setRemark(this.addContactRemarkTxtField.getText());
+
+			try {
+				boolean flag = UpdateDb.addContactToDb(user, contact);
+				if (flag) {
+					JOptionPane.showConfirmDialog(null, "联系人添加成功");
+					this.addContactNameTxt.setText("");
+					this.addContactEmailTxt.setText("");
+					this.addContactPhoneTxt.setText("");
+					this.addContactRemarkTxtField.setText("");
+				} else {
+					JOptionPane.showConfirmDialog(null, "联系人添加失败，请检查填写信息");
+				}
+			} catch (Exception ex) {
+
+			}
+
+		}
+	}
+
+	/**
+	 * 验证手机格式是否有误
+	 */
 	private void addContactPhoneTxtFocusLost(java.awt.event.FocusEvent evt) {
 		// TODO add your handling code here:
 		String str = this.addContactPhoneTxt.getText();
 		if (!str
-				.matches("/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/")) {
+				.matches("^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$")) {
 			this.addContactPhoneLabel.setText("手机格式错误，请重新输入");
+			sign = false;
 		} else {
 			this.addContactPhoneLabel.setText(" ");
+			sign = true;
 		}
 	}
-    
+
 	/**
 	 * 验证邮箱格式是否有误
 	 * @param evt
@@ -402,11 +462,13 @@ public class AddContact extends javax.swing.JInternalFrame {
 		if (!str
 				.matches("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?")) {
 			this.addContactEmailLabel.setText("邮箱格式错误，请重新输入");
+			sign = false;
 		} else {
 			this.addContactEmailLabel.setText(" ");
+			sign = true;
 		}
 	}
-    
+
 	/**
 	 * 验证姓名是否有误
 	 * @param evt
@@ -416,8 +478,10 @@ public class AddContact extends javax.swing.JInternalFrame {
 		String str = this.addContactNameTxt.getText();
 		if (!str.matches("[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*")) {
 			this.addContactNameLabel.setText("姓名格式错误，请重新输入");
+			sign = false;
 		} else {
 			this.addContactNameLabel.setText(" ");
+			sign = true;
 		}
 	}
 
@@ -430,12 +494,13 @@ public class AddContact extends javax.swing.JInternalFrame {
 	private javax.swing.JButton addContactCancelBtn;
 	private javax.swing.JLabel addContactEmailLabel;
 	private javax.swing.JTextField addContactEmailTxt;
+	private javax.swing.JComboBox addContactGroupJcb;
 	private javax.swing.JLabel addContactNameLabel;
 	private javax.swing.JTextField addContactNameTxt;
 	private javax.swing.JButton addContactOkBtn;
 	private javax.swing.JLabel addContactPhoneLabel;
 	private javax.swing.JTextField addContactPhoneTxt;
-	private javax.swing.JComboBox addContactGroupJcb;
+	private javax.swing.JTextArea addContactRemarkTxtField;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JLabel jLabel3;
@@ -444,7 +509,6 @@ public class AddContact extends javax.swing.JInternalFrame {
 	private javax.swing.JLabel jLabel6;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JTextArea jTextArea1;
 	// End of variables declaration//GEN-END:variables
 
 }
