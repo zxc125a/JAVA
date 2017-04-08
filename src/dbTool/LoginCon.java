@@ -62,14 +62,15 @@ public class LoginCon {
 				contacts.setUid(rs.getInt("uid"));
 				contacts.setUsername(rs.getString("username"));
 				contacts.setName(rs.getString("name"));
-				contacts.setPhone(rs.getInt("phone"));
+				contacts.setPhone(rs.getString("phone"));
 				contacts.setSex(rs.getString("sex"));
 				contacts.setBirthday(rs.getString("birthday"));
 				contacts.setAddress(rs.getString("address"));
 				contacts.setEmail(rs.getString("email"));
 				contacts.setWorkplace(rs.getString("workplace"));
-				contacts.setWorkphone(rs.getString("workphone"));
+				contacts.setTelephone(rs.getString("telephone"));
 				contacts.setGroupName(rs.getString("groupname"));
+				contacts.setGid(rs.getInt("gid"));
 				user.getAllGroupName().add(rs.getString("groupname"));
 				vContactsGroup.add(contacts);
 		} 
