@@ -1,11 +1,9 @@
 package info;
 
-import java.util.HashSet;
 import java.util.Vector;
 
 import view.MainForm;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class User {
 	
@@ -15,7 +13,7 @@ public class User {
 	private String mail;
 	private String phone;
 	private Vector<Contacts> contactsGrounp;
-	private HashSet<String> allGroupName = new HashSet<String>();  //所有联系人的分组集合
+	private Vector<String> allGroupName = new Vector<String>();  //所有联系人的分组组名集合
 	private MainForm mainForm;
 
 	/**
@@ -58,10 +56,10 @@ public class User {
 	public void setContactsGrounp(Vector<Contacts> contactsGrounp) {
 		this.contactsGrounp = contactsGrounp;
 	}
-	public HashSet<String> getAllGroupName() {
+	public Vector<String> getAllGroupName() {
 		return allGroupName;
 	}
-	public void setAllGroupName(HashSet<String> allGroupName) {
+	public void setAllGroupName(Vector<String> allGroupName) {
 		this.allGroupName = allGroupName;
 	}
 	/**

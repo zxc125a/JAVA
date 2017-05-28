@@ -1,5 +1,6 @@
 package util;
 
+
 /**
  * 封装代码，提高代码的复用性
  * @author john
@@ -8,7 +9,7 @@ package util;
 public class Check {
 
 	/**
-	 * 判断字符串是否为空
+	 * 判断字符串是否为空,如果为空，则返回true，反则返回false
 	 * @return
 	 */
 	public static boolean isEmpty(String str){
@@ -83,5 +84,25 @@ public class Check {
 		} else {
 			return false;
 		}
+	}
+	/**
+	 * 验证图片格式
+	 * @param str
+	 * @return
+	 */
+	public static boolean judformat(String str){
+		if("bmp".equals(str)){
+			return true;
+		}
+		if("png".equals(str)){
+			return true;
+		}
+		if("jpeg".equals(str)){
+			return true;
+		}
+		if("jpg".equals(str)){
+			return true;
+		}
+		return false;
 	}
 }

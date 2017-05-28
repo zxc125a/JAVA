@@ -6,6 +6,9 @@
 
 package view;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import util.Check;
@@ -17,6 +20,10 @@ import util.ImageCodePanel;
  */
 public class Register_ extends javax.swing.JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ImageCodePanel changeImg = new ImageCodePanel();
 
 	/** Creates new form Register_ */
@@ -26,9 +33,12 @@ public class Register_ extends javax.swing.JFrame {
 		this.changeImg.setLocation(this.regChangePicBtn.getX() - 115,
 				this.regChangePicBtn.getY() - 15);
 		this.setLocationRelativeTo(null);
+		Image img = new ImageIcon("image/R1.png").getImage();
+		this.setIconImage(img);
 	}
 
 	//GEN-BEGIN:initComponents
+	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
 
 		regUsernameConfirmLab = new javax.swing.JLabel();
@@ -71,12 +81,12 @@ public class Register_ extends javax.swing.JFrame {
 
 		jLabel4.setText("\u5bc6    \u7801 :");
 
-		regAckPswConfirmLab.setText("  ");
+/*		regAckPswConfirmLab.setText("  ");
 		regAckPswConfirmLab.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusLost(java.awt.event.FocusEvent evt) {
-				RegAckPswTxtFocusLost(evt);
+				regAckPswConfirmLabFocusLost(evt);
 			}
-		});
+		});*/
 
 		jLabel6.setText("\u786e\u8ba4\u5bc6\u7801\uff1a");
 
@@ -117,6 +127,11 @@ public class Register_ extends javax.swing.JFrame {
 		});
 
 		regBtn.setText("\u6ce8  \u518c");
+		regBtn.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				regBtnActionPerformed(evt);
+			}
+		});
 
 		jButton3.setText("\u8fd4  \u56de");
 		jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -522,7 +537,7 @@ public class Register_ extends javax.swing.JFrame {
 			return;
 		}
 		if (!validCode.equals(this.regVarificationCodeTxt.getText())) {
-			JOptionPane.showConfirmDialog(null, "验证码错误，请重新输入！");
+			JOptionPane.showMessageDialog(null, "验证码错误，请重新输入！");
 			return;
 		}
 

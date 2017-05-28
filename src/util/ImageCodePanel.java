@@ -19,6 +19,10 @@ import javax.swing.JPanel;
  *
  */
 public class ImageCodePanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final static int WIDTH = 100;
 	public final static int HEIGHT = 50;
 	private String validCode = "";
@@ -77,7 +81,7 @@ public class ImageCodePanel extends JPanel{
 		return validCode;
 	}
 
-	public void setValidCode(String getValidCode) {
+	public void setValidCode(String validCode) {
 		this.validCode = validCode;
 	}	
 	

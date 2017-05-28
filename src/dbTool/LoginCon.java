@@ -37,6 +37,7 @@ public class LoginCon {
 				user.setMail(rs.getString("mail"));
 				user.setPhone(rs.getString("mobilephone"));
 				user.setContactsGrounp(getContacts(con, user));
+				user.setAllGroupName(GetDataFromDb.getGroupName(user));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -70,8 +71,11 @@ public class LoginCon {
 				contacts.setWorkplace(rs.getString("workplace"));
 				contacts.setTelephone(rs.getString("telephone"));
 				contacts.setGroupName(rs.getString("groupname"));
+				contacts.setRemark(rs.getString("remark"));
 				contacts.setGid(rs.getInt("gid"));
+				contacts.setImgPath(rs.getString("imgPath"));
 				user.getAllGroupName().add(rs.getString("groupname"));
+				
 				vContactsGroup.add(contacts);
 		} 
 		return vContactsGroup;

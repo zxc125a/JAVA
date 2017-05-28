@@ -2,9 +2,7 @@ package dbTool;
 
 import java.sql.*;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 
-import util.Check;
 
 public class DbCon {
 	private static String username = "root";

@@ -6,16 +6,29 @@
 
 package view;
 
-import info.Contacts;
 import info.User;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.sql.Connection;
 
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
-import util.ImageCodePanel;
+import org.jvnet.lafwidget.combo.ComboboxAutoCompletionWidget;
+import org.jvnet.substance.SubstanceLookAndFeel;
+import org.jvnet.substance.border.StandardBorderPainter;
+import org.jvnet.substance.button.ClassicButtonShaper;
+import org.jvnet.substance.painter.StandardGradientPainter;
+import org.jvnet.substance.skin.BusinessSkin;
+import org.jvnet.substance.theme.SubstanceCremeTheme;
+import org.jvnet.substance.title.FlatTitlePainter;
+import org.jvnet.substance.watermark.SubstanceBinaryWatermark;
+
+import util.ProgressBar;
+//import util.ProgressBar;
 
 import dbTool.DbCon;
 import dbTool.LoginCon;
@@ -25,12 +38,22 @@ import dbTool.LoginCon;
  * @author  __USER__
  */
 public class Login_ extends javax.swing.JFrame {
-
+    
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static JFrame mainForn;
+	private static MainForm mainForm;
 	/** Creates new form Login */
 	public Login_() {
 		initComponents();
-		ImageCodePanel Icp = new ImageCodePanel();
+		//ImageCodePanel Icp = new ImageCodePanel();
 		this.setLocationRelativeTo(null);
+		Image img = new ImageIcon("image/R1.png").getImage();
+		this.setIconImage(img);
+		this.setTitle("通讯录管理系统");
 	}
 
 	/** This method is called from within the constructor to
@@ -183,13 +206,17 @@ public class Login_ extends javax.swing.JFrame {
 			con = DbCon.getCon();
 			user = LoginCon.loginCheck(con, username, password);
 			if (user != null) {
-				JOptionPane.showConfirmDialog(null, "用户登录成功");
+				JOptionPane.showMessageDialog(null, "用户登录成功");
 				this.dispose();
-				MainForm mainForm = new MainForm(user);
+				mainForm.setUser(user);
 				user.setMainForm(mainForm);
-				mainForm.setVisible(true);
+/*				MainForm mainForm = new MainForm(user);
+				user.setMainForm(mainForm);*/
+				mainForm.paintP();
+				mainForm.setVisible(true);			
+				
 			} else {
-				JOptionPane.showConfirmDialog(null, "用户登录失败");
+				JOptionPane.showMessageDialog(null, "用户登录失败");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -203,11 +230,39 @@ public class Login_ extends javax.swing.JFrame {
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
+		
+	   	
+		mainForn = new Login_();
+		//new ProgressBar(mainForn);
+		mainForm = new MainForm();
+		
 		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new Login_().setVisible(true);
+			public void run(){
+				try {  
+		            UIManager.setLookAndFeel(new SubstanceLookAndFeel());  
+		            JFrame.setDefaultLookAndFeelDecorated(true);  
+		            JDialog.setDefaultLookAndFeelDecorated(true);  
+		            SubstanceLookAndFeel.setCurrentTheme(new SubstanceCremeTheme()); 
+		            SubstanceLookAndFeel.setSkin(new BusinessSkin());  
+		            SubstanceLookAndFeel.setCurrentButtonShaper(new ClassicButtonShaper());  
+		            SubstanceLookAndFeel.setCurrentWatermark(new SubstanceBinaryWatermark());  
+		            SubstanceLookAndFeel.setCurrentBorderPainter(new StandardBorderPainter());  
+		            SubstanceLookAndFeel.setCurrentGradientPainter(new StandardGradientPainter());  
+		            SubstanceLookAndFeel.setCurrentTitlePainter(new FlatTitlePainter());  
+		            //SubstanceLookAndFeel.setCurrentCombobox(new ComboboxAutoCompletionWidget());
+		            mainForn.setVisible(true);
+	
+		        } catch (Exception e) {  
+		           // System.err.println("Something went wrong!");  
+		            JOptionPane.showConfirmDialog(null, "Something went wrong!");
+		        }  
+				
+				
 			}
 		});
+
+		
+		
 	}
 
 	//GEN-BEGIN:variables

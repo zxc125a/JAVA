@@ -6,11 +6,16 @@
 
 package view;
 
+import java.awt.Image;
 import java.sql.SQLException;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import util.Check;
+import util.ChooseDateDialog;
+import util.Tool;
 
 import dbTool.GetDataFromDb;
 import dbTool.UpdateDb;
@@ -24,6 +29,10 @@ import info.User;
  */
 public class AddContact extends javax.swing.JInternalFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean sign = false;
 	private User user; //用户信息
 
@@ -37,6 +46,9 @@ public class AddContact extends javax.swing.JInternalFrame {
 		this.setLocation(150, 30);
 		this.user = user;
 		paint(user);
+		Image img = new ImageIcon("image/R1.png").getImage();
+		Icon icon = Tool.createIcon(img, 15, 15);// 读取图标
+		this.setFrameIcon(icon); // 设置图标
 	}
 
 	/**
@@ -47,6 +59,15 @@ public class AddContact extends javax.swing.JInternalFrame {
 		 * 哈希表去重,渲染复合框，填入用户所有联系人组
 		 */
 		this.addContactGroupCb.removeAllItems();
+		try {
+			user.setAllGroupName(GetDataFromDb.getGroupName(user));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		java.util.Iterator<String> it = user.getAllGroupName().iterator();
 		while (it.hasNext()) {
 			String str = it.next();
@@ -66,11 +87,10 @@ public class AddContact extends javax.swing.JInternalFrame {
 		jPanel1 = new javax.swing.JPanel();
 		jTabbedPane1 = new javax.swing.JTabbedPane();
 		jPanel2 = new javax.swing.JPanel();
-		addContactNameLabel = new java.awt.Label();
 		addContactNameTxt = new javax.swing.JTextField();
 		jLabel1 = new javax.swing.JLabel();
 		jLabel2 = new javax.swing.JLabel();
-		jComboBox1 = new javax.swing.JComboBox();
+		addContactSex = new javax.swing.JComboBox();
 		addContactPhoneLabel = new javax.swing.JLabel();
 		addContactPhoneTxt = new javax.swing.JTextField();
 		jLabel4 = new javax.swing.JLabel();
@@ -81,6 +101,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 		addContactGroupCb = new javax.swing.JComboBox();
 		addContactOkBtn = new javax.swing.JButton();
 		addContactCancel = new javax.swing.JButton();
+		addContactNameLabel = new javax.swing.JLabel();
 		jPanel3 = new javax.swing.JPanel();
 		jLabel3 = new javax.swing.JLabel();
 		addContactTelephoneTxt = new javax.swing.JTextField();
@@ -98,9 +119,6 @@ public class AddContact extends javax.swing.JInternalFrame {
 
 		jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-		addContactNameLabel.setBackground(new java.awt.Color(240, 240, 240));
-		addContactNameLabel.setText("    ");
-
 		addContactNameTxt.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusLost(java.awt.event.FocusEvent evt) {
 				addContactNameTxtFocusLost(evt);
@@ -112,7 +130,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 		jLabel2.setBackground(new java.awt.Color(255, 0, 0));
 		jLabel2.setText("   \u59d3    \u540d\uff1a");
 
-		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
+		addContactSex.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
 				"男", "女" }));
 
 		addContactPhoneLabel.setBackground(new java.awt.Color(255, 0, 0));
@@ -154,6 +172,8 @@ public class AddContact extends javax.swing.JInternalFrame {
 				addContactCancelActionPerformed(evt);
 			}
 		});
+
+		addContactNameLabel.setText("  ");
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
@@ -205,31 +225,6 @@ public class AddContact extends javax.swing.JInternalFrame {
 																javax.swing.GroupLayout.PREFERRED_SIZE))
 										.addGap(94, 94, 94))
 						.addGroup(
-								jPanel2Layout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												jLabel2,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												66, Short.MAX_VALUE)
-										.addGap(28, 28, 28)
-										.addGroup(
-												jPanel2Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addComponent(
-																addContactNameTxt,
-																javax.swing.GroupLayout.Alignment.LEADING,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																304,
-																Short.MAX_VALUE)
-														.addComponent(
-																addContactNameLabel,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																304,
-																Short.MAX_VALUE))
-										.addGap(96, 96, 96))
-						.addGroup(
 								javax.swing.GroupLayout.Alignment.TRAILING,
 								jPanel2Layout
 										.createSequentialGroup()
@@ -240,7 +235,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 												66, Short.MAX_VALUE)
 										.addGap(28, 28, 28)
 										.addComponent(
-												jComboBox1,
+												addContactSex,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
 												99,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,12 +261,39 @@ public class AddContact extends javax.swing.JInternalFrame {
 												javax.swing.GroupLayout.PREFERRED_SIZE,
 												98,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addGap(300, 300, 300)).addGroup(
+										.addGap(300, 300, 300))
+						.addGroup(
 								jPanel2Layout.createSequentialGroup().addGap(
 										144, 144, 144).addComponent(
 										addContactOkBtn).addGap(58, 58, 58)
 										.addComponent(addContactCancel)
-										.addContainerGap(172, Short.MAX_VALUE)));
+										.addContainerGap(172, Short.MAX_VALUE))
+						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
+								jPanel2Layout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												jLabel2,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												65, Short.MAX_VALUE)
+										.addGap(28, 28, 28)
+										.addGroup(
+												jPanel2Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																addContactNameLabel,
+																javax.swing.GroupLayout.Alignment.LEADING,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																303,
+																Short.MAX_VALUE)
+														.addComponent(
+																addContactNameTxt,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																303,
+																Short.MAX_VALUE))
+										.addGap(96, 96, 96)));
 		jPanel2Layout
 				.setVerticalGroup(jPanel2Layout
 						.createParallelGroup(
@@ -280,13 +302,9 @@ public class AddContact extends javax.swing.JInternalFrame {
 								jPanel2Layout
 										.createSequentialGroup()
 										.addContainerGap()
-										.addComponent(
-												addContactNameLabel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(addContactNameLabel)
 										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 										.addGroup(
 												jPanel2Layout
 														.createParallelGroup(
@@ -303,7 +321,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.BASELINE)
 														.addComponent(
-																jComboBox1,
+																addContactSex,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -344,7 +362,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 														.addComponent(jLabel6))
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												23, Short.MAX_VALUE)
+												36, Short.MAX_VALUE)
 										.addGroup(
 												jPanel2Layout
 														.createParallelGroup(
@@ -374,14 +392,15 @@ public class AddContact extends javax.swing.JInternalFrame {
 
 		jLabel8.setText("\u5de5\u4f5c\u5355\u4f4d\uff1a");
 
-		addContactWorkplaceTxt
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-					//	addContactWorkplaceTxtActionPerformed(evt);
+		jLabel9.setText("\u751f      \u65e5\uff1a");
+
+		addContactBirthdayTxt.setEditable(false);
+		addContactBirthdayTxt
+				.addMouseListener(new java.awt.event.MouseAdapter() {
+					public void mouseClicked(java.awt.event.MouseEvent evt) {
+						addContactBirthdayTxtMouseClicked(evt);
 					}
 				});
-
-		jLabel9.setText("\u751f      \u65e5\uff1a");
 
 		jLabel10.setText("\u5907      \u6ce8\uff1a");
 
@@ -523,7 +542,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 														.addComponent(
 																jScrollPane1,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																135,
+																151,
 																Short.MAX_VALUE))
 										.addContainerGap()));
 
@@ -542,7 +561,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel1Layout.createSequentialGroup().addContainerGap()
 						.addComponent(jTabbedPane1,
-								javax.swing.GroupLayout.DEFAULT_SIZE, 363,
+								javax.swing.GroupLayout.DEFAULT_SIZE, 379,
 								Short.MAX_VALUE).addContainerGap()));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
@@ -564,6 +583,16 @@ public class AddContact extends javax.swing.JInternalFrame {
 		pack();
 	}// </editor-fold>
 	//GEN-END:initComponents
+
+	/**
+	 * 生日文本框添加按钮点击事件，获取时间 
+	 */
+	private void addContactBirthdayTxtMouseClicked(java.awt.event.MouseEvent evt) {
+		// TODO add your handling code here:
+		ChooseDateDialog chooseDate = new ChooseDateDialog(
+				this.addContactBirthdayTxt);
+		chooseDate.setVisible(true);
+	}
 
 	/**
 	 * 返回按钮，返回主界面并刷新主界面
@@ -592,8 +621,8 @@ public class AddContact extends javax.swing.JInternalFrame {
 			String groupName = this.addContactGroupCb.getSelectedItem()
 					.toString();
 			contact.setGroupName(groupName);
-			
-			if (this.addContactGroupCb.getSelectedIndex() == 0) {
+
+			if (this.addContactSex.getSelectedIndex() == 0) {
 				contact.setSex("男");
 			} else {
 				contact.setSex("女");
@@ -615,7 +644,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 			try {
 				boolean flag = UpdateDb.addContactToDb(user, contact);
 				if (flag) {
-					JOptionPane.showConfirmDialog(null, "联系人添加成功");
+					JOptionPane.showMessageDialog(null, "联系人添加成功");
 					this.addContactNameTxt.setText("");
 					this.addContactEmailTxt.setText("");
 					this.addContactPhoneTxt.setText("");
@@ -625,7 +654,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 					this.addContactWorkplaceTxt.setText("");
 					user.getMainForm().paintTable();
 				} else {
-					JOptionPane.showConfirmDialog(null, "联系人添加失败，请检查填写信息");
+					JOptionPane.showMessageDialog(null, "联系人添加失败，请检查填写信息");
 				}
 			} catch (Exception ex) {
 
@@ -687,7 +716,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 	private javax.swing.JLabel addContactEmailLabel;
 	private javax.swing.JTextField addContactEmailTxt;
 	private javax.swing.JComboBox addContactGroupCb;
-	private java.awt.Label addContactNameLabel;
+	private javax.swing.JLabel addContactNameLabel;
 	private javax.swing.JTextField addContactNameTxt;
 	private javax.swing.JButton addContactOkBtn;
 	private javax.swing.JLabel addContactPhoneLabel;
@@ -695,7 +724,7 @@ public class AddContact extends javax.swing.JInternalFrame {
 	private javax.swing.JTextArea addContactRemarkTxtField;
 	private javax.swing.JTextField addContactTelephoneTxt;
 	private javax.swing.JTextField addContactWorkplaceTxt;
-	private javax.swing.JComboBox jComboBox1;
+	private javax.swing.JComboBox addContactSex;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel10;
 	private javax.swing.JLabel jLabel2;
@@ -711,6 +740,5 @@ public class AddContact extends javax.swing.JInternalFrame {
 	private javax.swing.JPanel jPanel3;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTabbedPane jTabbedPane1;
-	// End of variables declaration//GEN-END:variables
 
 }

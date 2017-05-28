@@ -15,9 +15,21 @@ public class Contacts {
 	private String workphone;
 	private String groupName;
 	private String remark;
-	private String num;
 	private int gid;
+	private String imgPath;
 
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
+	public String getName() {
+		return name;
+	}
 
 	public int getGid() {
 		return gid;
@@ -55,12 +67,6 @@ public class Contacts {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getNum() {
-		return num;
-	}
-	public void setNum(String num) {
-		this.num = num;
-	}
 	public int getUid() {
 		return uid;
 	}
@@ -69,6 +75,7 @@ public class Contacts {
 	}
 	public Contacts() {
 		super();
+		this.imgPath = "";
 	}
 	public String getUsername() {
 		return username;
@@ -76,14 +83,17 @@ public class Contacts {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getName() {
+	public String str1() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhone() {
+	public String s() {
 		return phone;
+	}
+	public String getPhone() {
+		return this.phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -140,4 +150,17 @@ public class Contacts {
 		return this.groupName;
 	}
 	
+	public int hashCode(){
+		return uid;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		Contacts contact = (Contacts)obj;
+		Boolean flag = (this.uid == contact.uid) && (this.gid == contact.getGid());
+		return flag;
+	}
 }
+
+

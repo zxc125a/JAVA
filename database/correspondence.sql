@@ -34,14 +34,15 @@ CREATE TABLE `tb_contacts` (
   `groupname` varchar(50) DEFAULT NULL,
   `remark` varchar(200) DEFAULT NULL,
   `gid` int(255) DEFAULT NULL,
+  `imgPath` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`uid`),
   KEY `gid` (`gid`),
   CONSTRAINT `tb_contacts_ibfk_1` FOREIGN KEY (`gid`) REFERENCES `tb_group` (`gid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=gbk;
 
 /*Data for the table `tb_contacts` */
 
-insert  into `tb_contacts`(`uid`,`username`,`name`,`phone`,`sex`,`birthday`,`address`,`email`,`workplace`,`telephone`,`groupname`,`remark`,`gid`) values (2,'test','王五','13067889200','男','1990-01-01','','123@qq.com','','6690123','好友','',1),(3,'test','王五','13067889200','男','1990-01-01','','123@qq.com','','6690123','好友','',1),(7,'test','王五','13067889200','男','1990-01-01','','123@qq.com','','6690123','好友','',1),(8,'test','王五','13067889200','男','1990-01-01','','123@qq.com','','6690123','好友','',1),(9,'test','王五','13067889200','男','1990-01-01','','123@qq.com','','6690123','好友','',1),(12,'test','王五','13067889200','男','1990-01-01','','123@qq.com','','6690123','好友','',1);
+insert  into `tb_contacts`(`uid`,`username`,`name`,`phone`,`sex`,`birthday`,`address`,`email`,`workplace`,`telephone`,`groupname`,`remark`,`gid`,`imgPath`) values (8,'test','赵六','13067889200','男','2012-5-16','','123@qq.com','','6690123','好友','',1,'F:\\note\\repository\\correspondence\\image\\20170509001132.jpg'),(9,'test','圣七','13067889200','男','2017-5-17','','123@qq.com','','6690123','好友','',1,'F:\\note\\repository\\correspondence\\image\\20170508233552.jpg'),(14,'test','赵四','13602805418','女','2017-5-3','','456@qq.com','','','好朋友','',4,NULL),(36,'test','赵三','13102796677','男','2017-5-19','','1234@qq.com','','','好友','',1,NULL),(49,'test','老李','13102796676','男','2017/5/19','','123@qq.com','','6623190','老朋友','',31,NULL),(51,'test','小李','13102796677','女','2017/5/19','','','','','新朋友','',1,NULL),(52,'test','赵丽','13156789111','女','1995-5-11','','111@qq.com','','','好友','',1,'');
 
 /*Table structure for table `tb_group` */
 
@@ -52,11 +53,11 @@ CREATE TABLE `tb_group` (
   `username` varchar(100) DEFAULT NULL COMMENT '用户名',
   `groupname` varchar(255) DEFAULT NULL COMMENT '组名',
   PRIMARY KEY (`gid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=gbk;
 
 /*Data for the table `tb_group` */
 
-insert  into `tb_group`(`gid`,`username`,`groupname`) values (1,'test','好友');
+insert  into `tb_group`(`gid`,`username`,`groupname`) values (1,'test','好友'),(4,'test','好朋友'),(7,'test','我的亲人'),(31,'test','老朋友'),(32,'test','新朋友');
 
 /*Table structure for table `tb_user` */
 

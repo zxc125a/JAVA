@@ -5,9 +5,9 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+
 import info.Contacts;
 import info.User;
-import view.AddContact;
 
 public class UpdateDb {
 	/**
@@ -17,7 +17,7 @@ public class UpdateDb {
 	 */
 	public static boolean addContactToDb (User user, Contacts contact) throws SQLException, ClassNotFoundException{
 		 String sql = "insert into tb_contacts(username, name, email, phone, groupName,remark, birthday, workplace, address, " +
-		 		"telephone,sex, gid) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		 		"telephone,sex, gid, imgPath) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		 		
 		 PreparedStatement pstm = DbCon.getCon().prepareStatement(sql);
 		 pstm.setString(1, user.getUsername());
@@ -32,6 +32,8 @@ public class UpdateDb {
 		 pstm.setString(10, contact.getTelephone());
 		 pstm.setString(11, contact.getSex());
 		 pstm.setInt(12, contact.getGid());
+		 pstm.setString(13, "");
+		// System.out.println(pstm.toString());
 		 int n = 0;
 		 try{
 			 n = pstm.executeUpdate();
@@ -59,7 +61,7 @@ public class UpdateDb {
 	    		pstm.execute();
 	    	}catch(Exception ex){
 	    		ex.printStackTrace();
-	    		System.out.println("数据删除失败");
+	    		System.out.println("联系人删除失败");
 	    	}
 		}
      /**
@@ -69,7 +71,7 @@ public class UpdateDb {
       */
     	public static int updateContactToDb(User user, Contacts contact) throws SQLException, ClassNotFoundException{
     		String sql = "update tb_contacts set name = ?, phone = ?, sex = ?, birthday = ?, address = ?, " +
-    				"email = ?, workplace = ?, telephone = ?, groupname = ?, remark = ?, gid = ? where uid = ?";
+    				"email = ?, workplace = ?, telephone = ?, groupname = ?, remark = ?, gid = ?, imgPath = ? where uid = ?";
 	    	 PreparedStatement pstm = DbCon.getCon().prepareStatement(sql);
 	   		 pstm.setString(1, contact.getName());
 	   		 pstm.setString(2, contact.getPhone());
@@ -82,7 +84,9 @@ public class UpdateDb {
 			 pstm.setString(9, contact.getGroupName());
 			 pstm.setString(10, contact.getRemark());
 			 pstm.setInt(11, contact.getGid());
-			 pstm.setInt(12, contact.getUid());
+			 pstm.setString(12, contact.getImgPath());
+			 pstm.setInt(13, contact.getUid());
+			 System.out.println(contact.getImgPath());
 			 int n = 0;
 			 try{
 				 n = pstm.executeUpdate();
@@ -90,7 +94,29 @@ public class UpdateDb {
 				 System.out.println("联系人信息更新失败！");
 				 e.printStackTrace();
 			 }
-			 System.out.println(contact.getUid());
 			 return n;
+    	}
+    	
+    	/**
+    	 * 添加新的联系组
+    	 * @throws ClassNotFoundException 
+    	 * @throws SQLException 
+    	 */
+    	public static int insertNewGroup(User user, String groupname) throws SQLException, ClassNotFoundException{
+    		String  sql = "insert into tb_group(username, groupname) values(?, ?)";
+    		PreparedStatement pstm = DbCon.getCon().prepareStatement(sql);
+    		pstm.setString(1,	user.getUsername());
+    		pstm.setString(2, groupname);
+    		int flag = pstm.executeUpdate();
+    		return flag;
+    	}
+    	
+    	public static int deteGroup(User user, String groupname) throws SQLException, ClassNotFoundException{
+	    	String sql = "delete from tb_group where username = ? and groupname = ?";
+	    	PreparedStatement pstm = DbCon.getCon().prepareStatement(sql);
+	    	pstm.setString(1, user.getUsername());
+    		pstm.setString(2, groupname);
+    		int flag = pstm.executeUpdate();
+    		return flag;
     	}
 }
